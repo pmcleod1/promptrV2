@@ -60,8 +60,8 @@ complete_chat <- function(prompt,
 
   # submit prompts sequentially or in parallel
   if(parallel){
-    # 20 concurrent requests per host seems to be the optimum
-    resps <- httr2::req_perform_parallel(reqs, pool = curl::new_pool(host_con = 20))
+    # CHANGED TO 10 PARALLEL FOR RATE LIMIT
+    resps <- httr2::req_perform_parallel(reqs, pool = curl::new_pool(host_con = 10))
   } else{
     resps <- httr2::req_perform_sequential(reqs)
   }
