@@ -25,7 +25,8 @@ complete_chat <- function(prompt,
                           max_tokens = 1,
                           temperature = 0,
                           seed = NULL,
-                          parallel = FALSE) {
+                          parallel = FALSE,
+                          parallel_connections = 10) {
 
   if(openai_api_key == ''){
     stop("No API key detected in system environment. You can enter it manually using the 'openai_api_key' argument.")
@@ -61,7 +62,7 @@ complete_chat <- function(prompt,
   # submit prompts sequentially or in parallel
   if(parallel){
     # CHANGED TO 10 PARALLEL FOR RATE LIMIT
-    resps <- httr2::req_perform_parallel(reqs, pool = curl::new_pool(host_con = 10))
+    resps <- httr2::req_perform_parallel(reqs, pool = curl::new_pool(host_con = parallel_connections))
   } else{
     resps <- httr2::req_perform_sequential(reqs)
   }
