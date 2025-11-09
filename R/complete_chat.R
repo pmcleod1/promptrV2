@@ -62,7 +62,7 @@ complete_chat <- function(prompt,
   # submit prompts sequentially or in parallel
   if(parallel){
     # CHANGED TO 10 PARALLEL FOR RATE LIMIT
-    resps <- httr2::req_perform_parallel(reqs, pool = curl::new_pool(host_con = parallel_connections))
+    resps <- httr2::req_perform_parallel(reqs, max_active=parallel_connections)
   } else{
     resps <- httr2::req_perform_sequential(reqs)
   }
